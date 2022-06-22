@@ -1,17 +1,14 @@
 import Pessoas from 'express';
-import { pessoasController } from '../controllers/pessoasController';
+import PessoasController from '../controllers/pessoasController';
 const pessoasRouter = Pessoas.Router();
+const pessoasController = new PessoasController();
 
-pessoasRouter.get("/pessoas", pessoasController.GetPessoas);
+pessoasRouter.get("/pessoas", pessoasController.index);
 
-pessoasRouter.get("/pessoas/:id", pessoasController.GetPessoa);
+pessoasRouter.get("/pessoas/:id", pessoasController.get);
 
-pessoasRouter.post("/pessoas", pessoasController.PostPessoa);
+pessoasRouter.post("/pessoas", pessoasController.create);
 
-pessoasRouter.patch("/pessoas/:id", pessoasController.PatchPessoa);
-
-pessoasRouter.delete("/pessoas/:id", pessoasController.DeletePessoa);
-
-pessoasRouter.delete("/pessoas", pessoasController.DeletePessoas);
+pessoasRouter.delete("/pessoas/:id", pessoasController.delete);
 
 export const PessoasRouter = pessoasRouter;

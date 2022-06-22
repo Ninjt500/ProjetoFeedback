@@ -1,17 +1,14 @@
 import setor from 'express';
-import { setoresController } from '../controllers/setoresController';
+import SetoresController from '../controllers/setoresController';
 const setoresRouter = setor.Router();
+const setoresController = new SetoresController();
 
-setoresRouter.get("/setores", setoresController.GetSetores);
+setoresRouter.get("/setores", setoresController.index);
 
-setoresRouter.get("/setores/:id", setoresController.GetSetor);
+setoresRouter.get("/setores/:id", setoresController.get);
 
-setoresRouter.post("/setores", setoresController.PostSetor);
+setoresRouter.post("/setores", setoresController.create);
 
-setoresRouter.patch("/setores/:id", setoresController.PatchSetor);
-
-setoresRouter.delete("/setores/:id", setoresController.DeleteSetor);
-
-setoresRouter.delete("/setores", setoresController.DeleteSetores);
+setoresRouter.delete("/setores/:id", setoresController.delete);
 
 export const SetoresRouter = setoresRouter;

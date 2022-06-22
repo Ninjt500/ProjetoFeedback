@@ -1,17 +1,14 @@
 import feedback from 'express';
-import { feedbacksController } from '../controllers/feedbacksController';
+import FeedbacksController from '../controllers/feedbacksController';
 const feedbacksRouter = feedback.Router();
+const feedbacksController = new FeedbacksController();
 
-feedbacksRouter.get("/feedbacks", feedbacksController.GetFeedbacks);
+feedbacksRouter.get("/feedbacks", feedbacksController.index);
 
-feedbacksRouter.get("/feedbacks/:id", feedbacksController.GetFeedback);
+feedbacksRouter.get("/feedbacks/:id", feedbacksController.get);
 
-feedbacksRouter.post("/feedbacks", feedbacksController.PostFeedback);
+feedbacksRouter.post("/feedbacks", feedbacksController.create);
 
-feedbacksRouter.patch("/feedbacks/:id", feedbacksController.PatchFeedback);
-
-feedbacksRouter.delete("/feedbacks/:id", feedbacksController.DeleteFeedback);
-
-feedbacksRouter.delete("/feedbacks", feedbacksController.DeleteFeedbacks);
+feedbacksRouter.delete("/feedbacks/:id", feedbacksController.delete);
 
 export const FeedbacksRouter = feedbacksRouter;

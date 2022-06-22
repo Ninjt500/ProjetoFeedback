@@ -1,37 +1,47 @@
-class PessoasController{
-    constructor(){
+import { Request, Response } from "express";
+import PessoaModel from "../models/pessoasModel";
+import PessoasService from "../services/pessoasServices";
 
+export default class PessoasController
+{
+    private pessoaService: PessoasService;
+
+    constructor()
+    {
+        this.pessoaService = new PessoasService();
     }
 
-    GetPessoas(req:any, res:any)
-    {
-        res.send("Acessa a lista de pessoas");
+    public index = async (req: Request, res: Response) => {
+        const pessoa = await this.pessoaService.index();
+        res.send(pessoa).json();
     }
 
-    GetPessoa(req:any, res:any)
-    {
-        res.send("Acessa uma pessoa específica");
+    public get = async (req: Request, res: Response) => {
+        const { id } = req.params;
+
+        const pessoa = await this.pessoaService.get(Number(id));
+        res.send(pessoa).json();
     }
 
-    PostPessoa(req:any, res:any)
-    {
-        res.send("Cria um registro de pessoa");
+    public create = async (req: Request, res: Response) => {
+        const pessoa = req.body as PessoaModel;
+        
+        const newpessoa = await this.pessoaService.create(pessoa);
+        res.send(newpessoa).json();
     }
 
-    PatchPessoa(req:any, res:any)
-    {
-        res.send("Atualiza os dados de uma pessoa");
+    public update = async (req: Request, res: Response) => {
+        const pessoa = req.body as PessoaModel;
+        const { id } = req.params;
+
+        const newpessoa = this.pessoaService.Update(pessoa, Number(id));
+        res.send(newpessoa);
     }
 
-    DeletePessoa(req:any, res:any)
-    {
-        res.send("Deleta o registro de uma pessoa");
-    }
+    public delete = async (req: Request, res: Response) => {
+        const { id } = req.params;
 
-    DeletePessoas(req:any, res:any)
-    {
-        res.send("Deleta todos os registros de pessoas");
+        const pessoa = this.pessoaService.delete(Number(id));
+        res.send(pessoa);
     }
 }
-
-export const pessoasController = new PessoasController();

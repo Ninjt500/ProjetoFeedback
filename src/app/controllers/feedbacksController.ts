@@ -1,37 +1,47 @@
-class FeedbacksController{
-    constructor(){
+import { Request, Response } from "express";
+import FeedbackModel from "../models/feedbacksModel";
+import FeedbackService from "../services/feedbacksService";
 
+export default class FeedbacksController
+{
+    private feedbackService: FeedbackService;
+
+    constructor()
+    {
+        this.feedbackService = new FeedbackService();
     }
 
-    GetFeedbacks(req:any, res:any)
-    {
-        res.send("Acessa a lista de feedbacks");
+    public index = async (req: Request, res: Response) => {
+        const feedback = await this.feedbackService.index();
+        res.send(feedback).json();
     }
 
-    GetFeedback(req:any, res:any)
-    {
-        res.send("Acessa um feedback específico");
+    public get = async (req: Request, res: Response) => {
+        const { id } = req.params;
+
+        const feedback = await this.feedbackService.get(Number(id));
+        res.send(feedback).json();
     }
 
-    PostFeedback(req:any, res:any)
-    {
-        res.send("Cria um feedback de Setor");
+    public create = async (req: Request, res: Response) => {
+        const feedback = req.body as FeedbackModel;
+        
+        const newFeedback = await this.feedbackService.create(feedback);
+        res.send(newFeedback).json();
     }
 
-    PatchFeedback(req:any, res:any)
-    {
-        res.send("Atualiza os dados de um feedback");
+    public update = async (req: Request, res: Response) => {
+        const feedback = req.body as FeedbackModel;
+        const { id } = req.params;
+
+        const newFeedback = this.feedbackService.Update(feedback, Number(id));
+        res.send(newFeedback);
     }
 
-    DeleteFeedback(req:any, res:any)
-    {
-        res.send("Deleta o registro de um feedback");
-    }
+    public delete = async (req: Request, res: Response) => {
+        const { id } = req.params;
 
-    DeleteFeedbacks(req:any, res:any)
-    {
-        res.send("Deleta todos os registros de feedbacks");
+        const feedback = this.feedbackService.delete(Number(id));
+        res.send(feedback);
     }
 }
-
-export const feedbacksController = new FeedbacksController();

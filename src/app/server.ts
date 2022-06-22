@@ -1,20 +1,10 @@
-import express from 'express';
-import { FeedbacksRouter } from './routes/feedbacksRoutes';
-import { PessoasRouter } from './routes/pessoasRoutes';
-import { SetoresRouter } from './routes/setoresRoutes';
+import App from './app';
 
-const app = express();
-
-app.use(express.json());
-app.use("/", PessoasRouter);
-app.use("/", SetoresRouter);
-app.use("/", FeedbacksRouter);
-
-app.get("/", function(req, res){
+App.get("/", function(req, res){
     res.send("Servidor de feedback de alunos");
 })
 
-app.listen(3000, function(){
+App.listen(process.env.APP_PORT, function(){
     console.log("Servidor Funcionando Corretamente.");
     
 });

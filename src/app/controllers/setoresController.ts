@@ -1,37 +1,47 @@
-class SetoresController{
-    constructor(){
+import { Request, Response } from "express";
+import SetorModel from "../models/setoresModel";
+import SetorService from "../services/setoresService";
 
+export default class SetoresController
+{
+    private setorService: SetorService;
+
+    constructor()
+    {
+        this.setorService = new SetorService();
     }
 
-    GetSetores(req:any, res:any)
-    {
-        res.send("Acessa a lista de setores");
+    public index = async (req: Request, res: Response) => {
+        const setor = await this.setorService.index();
+        res.send(setor).json();
     }
 
-    GetSetor(req:any, res:any)
-    {
-        res.send("Acessa um setor específico");
+    public get = async (req: Request, res: Response) => {
+        const { id } = req.params;
+
+        const setor = await this.setorService.get(Number(id));
+        res.send(setor).json();
     }
 
-    PostSetor(req:any, res:any)
-    {
-        res.send("Cria um registro de Setor");
+    public create = async (req: Request, res: Response) => {
+        const setor = req.body as SetorModel;
+        
+        const newsetor = await this.setorService.create(setor);
+        res.send(newsetor).json();
     }
 
-    PatchSetor(req:any, res:any)
-    {
-        res.send("Atualiza os dados de um setor");
+    public update = async (req: Request, res: Response) => {
+        const setor = req.body as SetorModel;
+        const { id } = req.params;
+
+        const newsetor = this.setorService.Update(setor, Number(id));
+        res.send(newsetor);
     }
 
-    DeleteSetor(req:any, res:any)
-    {
-        res.send("Deleta o registro de um setor");
-    }
+    public delete = async (req: Request, res: Response) => {
+        const { id } = req.params;
 
-    DeleteSetores(req:any, res:any)
-    {
-        res.send("Deleta todos os registros de setores");
+        const setor = this.setorService.delete(Number(id));
+        res.send(setor);
     }
 }
-
-export const setoresController = new SetoresController();
