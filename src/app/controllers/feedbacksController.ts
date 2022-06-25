@@ -12,8 +12,16 @@ export default class FeedbacksController
     }
 
     public index = async (req: Request, res: Response) => {
-        const feedback = await this.feedbackService.index();
-        res.send(feedback).json();
+        try
+        {
+            const feedback = await this.feedbackService.index();
+            res.send(feedback).json();
+            return;
+        }
+        catch
+        {
+            return;
+        }
     }
 
     public get = async (req: Request, res: Response) => {

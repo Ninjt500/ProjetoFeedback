@@ -12,8 +12,16 @@ export default class SetoresController
     }
 
     public index = async (req: Request, res: Response) => {
-        const setor = await this.setorService.index();
-        res.send(setor).json();
+        try
+        {
+            const setor = await this.setorService.index();
+            res.send(setor).json();
+            return;
+        }
+        catch
+        {
+            return;
+        }
     }
 
     public get = async (req: Request, res: Response) => {
